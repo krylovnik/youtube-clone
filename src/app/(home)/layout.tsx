@@ -1,3 +1,5 @@
+import {HomeLayout} from "@/modules/home/ui/layouts/home-layout";
+
 interface Props {
     children: React.ReactNode;
 }
@@ -5,9 +7,9 @@ interface Props {
 
 const Layout = ({children}: Props) => {
     return (
-        <div>
+        <HomeLayout>
             {children}
-        </div>
+        </HomeLayout>
     )
 }
 export default Layout;
