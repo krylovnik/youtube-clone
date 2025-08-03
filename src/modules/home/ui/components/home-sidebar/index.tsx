@@ -1,9 +1,16 @@
-const Index = () => {
+import {Sidebar, SidebarContent} from "@/components/ui/sidebar";
+import {Separator} from "@/components/ui/separator";
+import {PersonalSection} from "@/modules/home/ui/components/home-sidebar/personal-section";
+import {MainSection} from "@/modules/home/ui/components/home-sidebar/main-section";
+
+export const HomeSidebar = () => {
     return (
-        <div>
-
-        </div>
-    );
-};
-
-export default Index;
+        <Sidebar className="pt-16 z-40 border-none" collapsible={"icon"}>
+            <SidebarContent className="bg-background">
+                <MainSection />
+                <Separator/>
+                <PersonalSection />
+            </SidebarContent>
+        </Sidebar>
+    )
+}
