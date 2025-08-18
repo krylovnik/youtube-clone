@@ -1,10 +1,10 @@
-import Image from "next/image";
+import {trpc} from "@/trpc/server"
 
-export default function Home() {
-  return (
-    <div>
-        <Image src="/logo.svg" height={50} width={50} alt="Logo" />
-        <p className="text-xl font-semibold tracking-tight">Content</p>
-    </div>
-  );
+export default async function Home() {
+    const data = await trpc.hello({text: "Me"})
+    return (
+        <div>
+            Client component says: {data.greeting}
+        </div>
+    );
 }
