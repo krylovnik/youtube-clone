@@ -2,6 +2,7 @@
 // ^-- to make sure we can mount the Provider from a server component
 import type { QueryClient } from '@tanstack/react-query';
 import { QueryClientProvider } from '@tanstack/react-query';
+import superjson from 'superjson'
 import { httpBatchLink } from '@trpc/client';
 import { createTRPCReact } from '@trpc/react-query';
 import { useState } from 'react';
@@ -39,8 +40,13 @@ export function TRPCProvider(
         trpc.createClient({
             links: [
                 httpBatchLink({
-                    // transformer: superjson, <-- if you use a data transformer
+                    transformer: superjson,
                     url: getUrl(),
+                    async headers(){
+                        const headers = new Headers();
+                        headers.set("x-trpc-source", 'nextjs-react');
+                        return headers;
+                    }
                 }),
             ],
         }),
