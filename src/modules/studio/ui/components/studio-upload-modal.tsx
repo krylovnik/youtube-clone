@@ -7,7 +7,7 @@ import {toast} from "sonner";
 import {ResponsiveModal} from "@/components/responsive-modal";
 import {StudioUploader} from "@/modules/studio/ui/components/studio-uploader";
 
-export const StudioUploadModal: React.FunctionComponent = () => {
+export const StudioUploadModal = () => {
     const utils = trpc.useUtils();
     const create = trpc.videos.create.useMutation({
         onSuccess: () => {
@@ -22,7 +22,6 @@ export const StudioUploadModal: React.FunctionComponent = () => {
     return (
         <>
             <ResponsiveModal title="Upload a video" open={!!create.data} onOpenChange={()=>create.reset()}>
-                <p>This will be an uploader</p>
                 {create.data?.url
                     ? <StudioUploader endpoint={create.data.url} onSuccess={()=> {}}/>
                     : <Loader2Icon/>
