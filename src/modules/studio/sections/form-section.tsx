@@ -163,7 +163,7 @@ const FormSectionSuspense = ({videoId}: FormSectionProps) => {
                                         onValueChange={field.onChange}
                                         defaultValue={field.value ?? undefined}>
                                         <FormControl>
-                                            <SelectTrigger>
+                                            <SelectTrigger className="w-full">
                                                 <SelectValue placeholder="Select a category"/>
                                             </SelectTrigger>
                                         </FormControl>
@@ -240,7 +240,7 @@ const FormSectionSuspense = ({videoId}: FormSectionProps) => {
                                         onValueChange={field.onChange}
                                         defaultValue={field.value ?? undefined}>
                                         <FormControl>
-                                            <SelectTrigger>
+                                            <SelectTrigger className="w-full">
                                                 <SelectValue placeholder="Select visibility"/>
                                             </SelectTrigger>
                                         </FormControl>
