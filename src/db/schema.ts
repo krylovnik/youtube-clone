@@ -1,4 +1,4 @@
-import {integer, pgEnum, pgTable, text, timestamp, uniqueIndex, uuid} from "drizzle-orm/pg-core";
+import {integer, pgEnum, pgTable, primaryKey, text, timestamp, uniqueIndex, uuid} from "drizzle-orm/pg-core";
 import {relations} from "drizzle-orm";
 import {createInsertSchema, createSelectSchema, createUpdateSchema} from "drizzle-zod";
 
@@ -55,3 +55,27 @@ export const videoRelations = relations(videos, ({ one }) => ({
         references: [categories.id]
     })
 }))
+
+export const videoViews = pgTable("video_views", {
+    userId: uuid("id").references(() => users.id, {onDelete:"cascade"}).notNull(),
+    videoId: uuid("id").references(() => videos.id, {onDelete:"cascade"}).notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (t) => [primaryKey({
+    name: "video_views_pk",
+    columns: [t.userId, t.videoId],
+})])
+
+export const videoViewRelations = relations(videoViews, ({one}) => ({
+    users: one(users, {
+        fields: [videoViews.userId],
+        references: [users.id],
+    }),
+    videos: one(videos, {
+        fields: [videoViews.videoId],
+        references: [videos.id]
+    })
+}));
+export const videoViewsInsertSchema = createInsertSchema(videoViews)
+export const videoViewsUpdateSchema = createUpdateSchema(videoViews)
+export const videoViewsSelectSchema = createSelectSchema(videoViews)
