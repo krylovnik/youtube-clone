@@ -5,8 +5,6 @@ import {auth} from "@clerk/nextjs/server";
 import {eq} from "drizzle-orm";
 import { db } from '@/db';
 import {users} from "@/db/schema";
-import {Redis} from "@upstash/redis";
-import {Ratelimit} from "@upstash/ratelimit";
 import { ratelimit } from '@/lib/ratelimit';
 
 
