@@ -1,7 +1,8 @@
 import {Button} from "@/components/ui/button"
 import {cn} from "@/lib/utils";
+import {ComponentProps} from "react";
 
-type ButtonProps = React.ComponentProps<typeof Button>;
+type ButtonProps = ComponentProps<typeof Button>;
 
 interface SubscriptionButtonProps {
     onClick: ButtonProps['onClick'];

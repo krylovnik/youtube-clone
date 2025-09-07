@@ -100,7 +100,7 @@ const VideosSectionSuspense = () => {
                         {videos.pages.flatMap((page)=> page.items).map((video) => (
                             <Link href={`/studio/videos/${video.id}`} key={video.id} legacyBehavior>
                                 <TableRow className="cursor-pointer">
-                                    <TableCell className="pl-6">
+                                    <TableCell className="pl-6 max-w-[300px]">
                                         <div className="flex items-center gap-4">
                                             <div className="relative aspect-video w-36 shrink-0">
                                                 <VideoThumbnail imageUrl={video.thumbnailUrl}
@@ -108,7 +108,7 @@ const VideosSectionSuspense = () => {
                                                                 title={video.title}
                                                                 duration={video.duration || 0} />
                                             </div>
-                                            <div className="flex flex-col overflow-hidden gap-y-1">
+                                            <div className="flex flex-col min-w-0 overflow-hidden gap-y-1 ">
                                                 <span className="text-sm line-clamp-1">{video.title}</span>
                                                 <span className="text-xs text-muted-foreground line-clamp-1">{video.description || "No description"}</span>
                                             </div>
