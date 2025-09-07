@@ -1,5 +1,5 @@
 import {baseProcedure, createTRPCRouter, protectedProcedure} from "@/trpc/init";
-import {users, videos, videoUpdateSchema} from "@/db/schema";
+import {users, videos, videoUpdateSchema, videoViews} from "@/db/schema";
 import {db} from "@/db";
 import {mux} from "@/lib/mux";
 import {and, eq, getTableColumns} from "drizzle-orm";
@@ -15,7 +15,7 @@ export const videosRouter = createTRPCRouter({
                     ...getTableColumns(videos),
                     user: {
                         ...getTableColumns(users)
-                    }
+                    }, viewCount: db.$count(videoViews, eq(videoViews.videoId, videos.id))
                 })
                 .from(videos)
                 .where(eq(videos.id, input.id))

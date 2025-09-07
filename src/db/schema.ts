@@ -11,6 +11,13 @@ export const users = pgTable("users", {
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
 }, (t) => [uniqueIndex("clerk_id_idx").on(t.clerkId)]);
 
+
+// For relational query API
+export const userRelations = relations(users, ({many}) => ({
+    videos: many(videos),
+    videoViews: many(videoViews),
+}))
+
 export const categories = pgTable("categories", {
     id: uuid("id").primaryKey().defaultRandom(),
     name: text("name").notNull().unique(),
@@ -45,7 +52,8 @@ export const videoInsertSchema = createInsertSchema(videos)
 export const videoUpdateSchema = createUpdateSchema(videos)
 export const videoSelectSchema = createSelectSchema(videos)
 
-export const videoRelations = relations(videos, ({ one }) => ({
+// For relational query API
+export const videoRelations = relations(videos, ({ one ,many}) => ({
     user: one(users, {
         fields: [videos.userId],
         references: [users.id]
@@ -53,12 +61,14 @@ export const videoRelations = relations(videos, ({ one }) => ({
     category: one(categories, {
         fields: [videos.categoryId],
         references: [categories.id]
-    })
+    }),
+    views: many(videoViews),
 }))
 
+
 export const videoViews = pgTable("video_views", {
-    userId: uuid("id").references(() => users.id, {onDelete:"cascade"}).notNull(),
-    videoId: uuid("id").references(() => videos.id, {onDelete:"cascade"}).notNull(),
+    userId: uuid("user_id").references(() => users.id, {onDelete:"cascade"}).notNull(),
+    videoId: uuid("video_id").references(() => videos.id, {onDelete:"cascade"}).notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
 }, (t) => [primaryKey({
@@ -66,6 +76,8 @@ export const videoViews = pgTable("video_views", {
     columns: [t.userId, t.videoId],
 })])
 
+
+// For relational query API
 export const videoViewRelations = relations(videoViews, ({one}) => ({
     users: one(users, {
         fields: [videoViews.userId],
