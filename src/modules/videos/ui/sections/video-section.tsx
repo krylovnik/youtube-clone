@@ -4,25 +4,34 @@ import {Suspense} from "react";
 import {ErrorBoundary} from "react-error-boundary";
 import {trpc} from "@/trpc/client";
 import {cn} from "@/lib/utils";
-import {VideoPlayer} from "@/modules/videos/ui/components/video-player";
+import {VideoPlayer, VideoPlayerSkeleton} from "@/modules/videos/ui/components/video-player";
 import {VideoBanner} from "@/modules/videos/ui/components/video-banner";
-import {VideoTopRow} from "@/modules/videos/ui/components/video-top-row";
+import {VideoTopRow, VideoTopRowSkeleton} from "@/modules/videos/ui/components/video-top-row";
 import {useAuth} from "@clerk/nextjs";
 
 interface VideoSectionProps {
     videoId: string;
 }
 
-export const VideoSection = ({videoId}:VideoSectionProps) => {
+export const VideoSection = ({videoId}: VideoSectionProps) => {
     return (
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<VideoSectionSkeleton/>}>
             <ErrorBoundary fallback={<p>Error</p>}>
                 <VideoSectionSuspense videoId={videoId}/>
             </ErrorBoundary>
         </Suspense>
     )
 }
-const VideoSectionSuspense = ({videoId}:VideoSectionProps) => {
+
+const VideoSectionSkeleton = () => {
+    return (
+        <>
+            <VideoPlayerSkeleton/>
+            <VideoTopRowSkeleton/>
+        </>)
+}
+
+const VideoSectionSuspense = ({videoId}: VideoSectionProps) => {
     const {isSignedIn} = useAuth();
     const utils = trpc.useUtils()
     const [video] = trpc.videos.getOne.useSuspenseQuery({id: videoId});
@@ -50,9 +59,8 @@ const VideoSectionSuspense = ({videoId}:VideoSectionProps) => {
                     thumbnailUrl={video.thumbnailUrl}
                 />
             </div>
-            <VideoBanner status={video.muxStatus} />
+            <VideoBanner status={video.muxStatus}/>
             <VideoTopRow video={video}/>
         </>
-
     )
 }
