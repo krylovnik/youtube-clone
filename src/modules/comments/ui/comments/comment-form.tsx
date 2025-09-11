@@ -26,6 +26,7 @@ export const CommentForm = ({videoId, onSuccess,parentId,onCancel, variant="comm
     const create = trpc.comments.create.useMutation({
         onSuccess: ()=> {
             utils.comments.getMany.invalidate({videoId});
+            utils.comments.getMany.invalidate({videoId, parentId});
             form.reset()
             toast.success("Comment added")
             onSuccess?.();
