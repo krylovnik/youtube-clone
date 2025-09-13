@@ -1,5 +1,5 @@
-import {CategoriesSection} from "@/modules/search/sections/categories-section";
-import {ResultsSection} from "@/modules/search/sections/results-section";
+import {CategoriesSection} from "@/modules/search/ui/sections/categories-section";
+import {ResultsSection} from "@/modules/search/ui/sections/results-section";
 
 interface SearchViewProps {
     query: string | undefined;

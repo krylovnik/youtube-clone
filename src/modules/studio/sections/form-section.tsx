@@ -20,6 +20,7 @@ import {VideoPlayer} from "@/modules/videos/ui/components/video-player";
 import Link from "next/link";
 import {snakeCaseToTitle} from "@/lib/utils";
 import {useRouter} from "next/navigation";
+import {APP_URL} from "@/constants";
 
 interface FormSectionProps {
     videoId: string
@@ -74,7 +75,7 @@ const FormSectionSuspense = ({videoId}: FormSectionProps) => {
     const onSubmit = (data: z.infer<typeof videoUpdateSchema>) => {
         update.mutate(data)
     }
-    const fullUrl = `${process.env.VERCEL_URL || "http://localhost:3000"}/videos/${videoId}`;
+    const fullUrl = `${APP_URL}/videos/${videoId}`;
     const [isCopied, setIsCopied] = useState(false);
 
     const onCopy = async () => {
