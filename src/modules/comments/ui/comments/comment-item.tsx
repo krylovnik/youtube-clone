@@ -77,11 +77,11 @@ export const CommentItem = ({comment, variant = "comment"}: CommentItemProps) =>
     return (
         <div>
             <div className="flex gap-4">
-                <Link href={`/users/${comment.userId}`}>
+                <Link prefetch href={`/users/${comment.userId}`}>
                     <UserAvatar imageUrl={comment.user.imageUrl} name={comment.user.name} size={variant === "comment" ? "lg" : "sm"}/>
                 </Link>
                 <div className="flex-1 min-w-0">
-                    <Link href={`/users/${comment.userId}`}>
+                    <Link prefetch href={`/users/${comment.userId}`}>
                         <div className="flex items-center gap-2 mb-0.5">
                             <span className="font-medium text-sm pb-0.5">
                                 {comment.user.name}

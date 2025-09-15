@@ -1,6 +1,6 @@
 import {createTRPCRouter, protectedProcedure} from "@/trpc/init";
 import {z} from "zod";
-import {subscriptions, users, videos,} from "@/db/schema";
+import {subscriptions, users} from "@/db/schema";
 
 import {TRPCError} from "@trpc/server";
 import {db} from "@/db";

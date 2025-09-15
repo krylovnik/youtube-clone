@@ -11,6 +11,7 @@ import {
 import {useAuth, useClerk} from "@clerk/nextjs"
 import Link from "next/link";
 import {usePathname} from "next/navigation";
+import {toast} from "sonner";
 
 const items = [
     {
@@ -23,12 +24,6 @@ const items = [
         title: "Liked videos",
         url: "/playlists/liked",
         icon: ThumbsUpIcon,
-        auth: true
-    },
-    {
-        title: "All playlists",
-        url: "/playlists",
-        icon: ListVideoIcon,
         auth: true
     },
 ];
@@ -55,13 +50,32 @@ export const PersonalSection = () => {
                                         return clerk.openSignIn();
                                     }}}
                             >
-                            <Link href={item.url} className="flex items-center gap-4">
+                            <Link prefetch href={item.url} className="flex items-center gap-4">
                                 <item.icon/>
                                 <span className="text-sm">{item.title}</span>
                             </Link>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
                     ))}
+                    <SidebarMenuItem>
+                        <SidebarMenuButton
+                            tooltip="All playlists"
+                            asChild
+                            isActive={pathname === "/playlists"}
+                            onClick={(e)=> {
+                                if (!isSignedIn) {
+                                    e.preventDefault();
+                                    return clerk.openSignIn();
+                                }
+                                toast.info("This function is in development. Try again later");
+                            }}
+                        >
+                        <div className="flex items-center gap-4">
+                            <ListVideoIcon/>
+                            <span className="text-sm">All playlists</span>
+                        </div>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarGroupContent>
         </SidebarGroup>
