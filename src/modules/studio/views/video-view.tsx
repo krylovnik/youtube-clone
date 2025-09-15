@@ -1,4 +1,4 @@
-import {FormSection} from "@/modules/studio/sections/form-section";
+import {FormSection} from "@/modules/studio/ui/sections/form-section";
 
 interface PageProps {
     videoId: string;
